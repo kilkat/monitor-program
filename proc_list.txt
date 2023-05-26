@@ -1,0 +1,5 @@
+SnippingTool.exe
+ALCapture.exe
+picpick.exe
+bdcam.exe
+GomCam.exe

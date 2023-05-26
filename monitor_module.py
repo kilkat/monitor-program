@@ -1,5 +1,6 @@
 import os
 import time
+import procmonitor_module
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 
@@ -55,6 +56,7 @@ def start_watchdog(monitor_path):
     try:
         while True:
             # 스크린샷 프로그램이 실행중인지 & 실행중이라면 process 죽이기
+            procmonitor_module.proc_monitor()
             pass
     except KeyboardInterrupt:
         observer.stop()
