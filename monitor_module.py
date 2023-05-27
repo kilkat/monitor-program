@@ -1,6 +1,9 @@
 import os
 import time
-import procmonitor_module
+import keyboard
+import proc_monitor_module
+import screenshot_monitor_module
+import pdf_mark_module
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 
@@ -22,8 +25,6 @@ class MyHandler(FileSystemEventHandler):
             print(f"File created: {event.src_path}")
             with open(log_path, "a", encoding="utf-8") as file:
                 file.write(f"User: {username} &&& File created: {event.src_path} &&& File created time: {time.strftime('%Y-%m-%d %H-%M-%S')}\n")
-                for pattern in patterns:
-                    pass  # 추후 워터마크 기능 추가 예정
 
     def on_modified(self, event):
         if event.is_directory:
@@ -34,8 +35,15 @@ class MyHandler(FileSystemEventHandler):
             print(f"File modified: {event.src_path}")
             with open(log_path, "a", encoding="utf-8") as file:
                 file.write(f"User: {username} &&& File modified: {event.src_path} &&& File modified time: {time.strftime('%Y-%m-%d %H-%M-%S')}\n")
-                for pattern in patterns:
-                    pass  # 추후 워터마크 기능 추가 예정
+            # print(type(event.src_path))
+            # print(event.src_path)
+            # print(patterns[0])
+            # if any(pattern in event.src_path for pattern in patterns):
+            #     print("파일 수정이 감지되었습니다")
+            #     file_path = event.src_path
+            #     event_time = time.strftime('%Y-%m-%d %H-%M-%S')
+            #     pdf_mark_module.mark_maker(file_path, event_time)
+
 
     def on_deleted(self, event):
         if event.is_directory:
@@ -55,12 +63,11 @@ def start_watchdog(monitor_path):
 
     try:
         while True:
-            # 스크린샷 프로그램이 실행중인지 & 실행중이라면 process 죽이기
-            procmonitor_module.proc_monitor()
+            proc_monitor_module.proc_monitor()
+            screenshot_monitor_module
             pass
     except KeyboardInterrupt:
         observer.stop()
     observer.join()
 
 start_watchdog(monitor_path)
-
