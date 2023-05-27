@@ -21,6 +21,7 @@ def screenshot_ctrl(event):
                 # 데이터 출력
                 print("Clipboard Screenshot Data:", data_handle)
                 win32clipboard.EmptyClipboard()
+                print("Clipboard data deleted")
 
             else:
                 print("No screenshot data on the clipboard.")
