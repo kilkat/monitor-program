@@ -21,7 +21,7 @@ PORT = 1234
 client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client_socket.connect((HOST, PORT))
 
-message = f"{log_time}"
+message = f"start: {log_time}"
 client_socket.send(message.encode())
 
 def recv_data(client_socket):
