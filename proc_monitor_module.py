@@ -4,7 +4,7 @@ import ctypes
 import os
 
 def proc_monitor():
-    f = open('monitor-program\proc_list.txt', 'r')
+    f = open('.\proc_list.txt', 'r')
     list_array = []
 
     for line in f:
