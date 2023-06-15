@@ -4,20 +4,14 @@ import ctypes
 import os
 
 def proc_monitor():
-    f = open('외주\monitor-program\proc_list.txt', 'r')
-    list_array = []
-
-    for line in f:
-        list_array.append(line.strip())
-
-    f.close()
+    process_list = ["SnippingTool.exe", "ALCapture.exe", "picpick.exe", "bdcam.exe", "GomCam.exe"]
 
     # 실행 중인 모든 프로세스 목록 가져오기
-    process_list = psutil.process_iter()
+    processes = psutil.process_iter()
 
     # 각 프로세스에 대한 정보 출력
-    for process in process_list:
-        if process.name() in list_array:
+    for process in processes:
+        if process.name() in process_list:
             print("PID:", process.pid)
             print("이름:", process.name())
             print("blacklist process")

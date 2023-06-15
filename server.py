@@ -3,21 +3,14 @@ from _thread import *
 
 client_sockets = []
 
-## Server IP and Port ##
-
 HOST = socket.gethostbyname(socket.gethostname())
 PORT = 1234
-
-########## processing in thread ##
-## new client, new thread ##
 
 def threaded(client_socket, addr):
     print('>> Connected by :', addr[0], ':', addr[1])
 
-    ## process until client disconnect ##
     while True:
         try:
-            ## send client if data recieved(echo) ##
             data = client_socket.recv(1024)
 
             if not data:
@@ -25,13 +18,11 @@ def threaded(client_socket, addr):
                 break
 
             print('>> Received from ' + addr[0], ':', addr[1], data.decode())
-            start_time = data.decode()[7:]
-            print(start_time)
-            f = open(start_time+".txt", "w")
+            f = open(addr[0]+".txt", "a", encoding='utf-8')
+            if(data.decode()):
+                f.write(data.decode())
             f.close()
 
-            ## chat to client connecting client ##
-            ## chat to client connecting client except person sending message ##
             for client in client_sockets:
                 if client != client_socket:
                     client.send(data)
@@ -46,15 +37,11 @@ def threaded(client_socket, addr):
 
     client_socket.close()
 
-############# Create Socket and Bind ##
-
 print('>> Server Start with ip :', HOST)
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 server_socket.bind((HOST, PORT))
 server_socket.listen()
-
-############# Client Socket Accept ##
 
 try:
     while True:
@@ -63,7 +50,7 @@ try:
         client_socket, addr = server_socket.accept()
         client_sockets.append(client_socket)
         start_new_thread(threaded, (client_socket, addr))
-        print("참가자 수 : ", len(client_sockets))
+        print("접속 PC 수 : ", len(client_sockets))
 except Exception as e:
     print('에러 : ', e)
 
