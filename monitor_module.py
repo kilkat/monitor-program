@@ -16,7 +16,7 @@ log_time = time.strftime('%Y-%m-%d %H-%M-%S')
 monitor_path = input("please input monitoring path = ")
 username = os.getlogin()
 
-HOST = input("통신할 server IP를 입력해주세요: ")
+HOST = input("please input server IP = ")
 PORT = 1234
 
 client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -90,7 +90,7 @@ class MyHandler(FileSystemEventHandler):
                 begin_hash.clear()
                 begin_hash.update(compare_hash)
                 compare_hash.clear()
-                
+
     def on_modified(self, event):
         global begin_hash, compare_hash
 
